@@ -1,0 +1,13 @@
+opa:
+  authorization:
+    url: "http://localhost:8181/v1/compile"
+    datasource:
+      jdbc:
+        driverClassName: "org.mariadb.jdbc.Driver"
+        username: "admin"
+        password: "MangaonTaNiny0!"
+        url: "jdbc:mariadb://localhost:3306/integrationTest"
+      hibernate:
+        dialect: "org.hibernate.dialect.MariaDBDialect"
+        entities:
+          package-name: "com.example.opadatafilterdemo.entity"
