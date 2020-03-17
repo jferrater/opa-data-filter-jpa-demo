@@ -1,8 +1,8 @@
 package com.example.opadatafilterdemo.service;
 
-import com.example.opadatafilterdemo.entity.PetEntity;
+import com.example.opadatafilterdemo.entity.PetProfileEntity;
 import com.example.opadatafilterdemo.model.Pet;
-import com.example.opadatafilterdemo.repository.PetRepository;
+import com.example.opadatafilterdemo.repository.PetProfileRepository;
 import com.github.jferrater.opa.ast.to.sql.query.model.request.PartialRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -20,32 +20,32 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class PetServiceTest {
+class PetProfileServiceTest {
 
     @MockBean
-    PetRepository petRepository;
+    PetProfileRepository petProfileRepository;
 
     @Autowired
-    private PetService target;
+    private PetProfileService target;
 
     @Test
     void shouldFilterData() {
         PartialRequest partialRequest = mock(PartialRequest.class);
-        PetEntity petEntity = petEntity();
-        when(petRepository.filterData(partialRequest)).thenReturn(List.of(petEntity));
+        PetProfileEntity petProfileEntity = petEntity();
+        when(petProfileRepository.filterData(partialRequest)).thenReturn(List.of(petProfileEntity));
 
         List<Pet> results = target.getPets(partialRequest);
 
         assertThat(results.size(), is(1));
     }
 
-    private PetEntity petEntity() {
-        PetEntity petEntity = new PetEntity();
-        petEntity.setId(1L);
-        petEntity.setClinic("SOMA");
-        petEntity.setName("fluffy");
-        petEntity.setOwner("dodong");
-        petEntity.setVeterinarian("alice");
-        return petEntity;
+    private PetProfileEntity petEntity() {
+        PetProfileEntity petProfileEntity = new PetProfileEntity();
+        petProfileEntity.setId(1L);
+        petProfileEntity.setClinic("SOMA");
+        petProfileEntity.setName("fluffy");
+        petProfileEntity.setOwner("dodong");
+        petProfileEntity.setVeterinarian("alice");
+        return petProfileEntity;
     }
 }

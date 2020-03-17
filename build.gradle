@@ -11,14 +11,13 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.11'
 
 repositories {
-	mavenLocal()
 	mavenCentral()
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.2.1-SNAPSHOT'
+	implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.2.1'
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.3.0'
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
 

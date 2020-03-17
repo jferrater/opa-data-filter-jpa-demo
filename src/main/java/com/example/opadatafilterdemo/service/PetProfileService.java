@@ -1,8 +1,8 @@
 package com.example.opadatafilterdemo.service;
 
-import com.example.opadatafilterdemo.entity.PetEntity;
+import com.example.opadatafilterdemo.entity.PetProfileEntity;
 import com.example.opadatafilterdemo.model.Pet;
-import com.example.opadatafilterdemo.repository.PetRepository;
+import com.example.opadatafilterdemo.repository.PetProfileRepository;
 import com.github.jferrater.opa.ast.to.sql.query.model.request.PartialRequest;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,12 @@ import static java.util.stream.Collectors.toList;
  * @author joffryferrater
  */
 @Service
-public class PetService {
+public class PetProfileService {
 
-    private PetRepository petRepository;
+    private PetProfileRepository petProfileRepository;
 
-    public PetService(PetRepository petRepository) {
-        this.petRepository = petRepository;
+    public PetProfileService(PetProfileRepository petProfileRepository) {
+        this.petProfileRepository = petProfileRepository;
     }
 
     public List<Pet> getPets(PartialRequest partialRequest) {
@@ -27,7 +27,7 @@ public class PetService {
     }
 
     private List<Pet> filterGetPets(PartialRequest partialRequest) {
-        List<PetEntity> pets = petRepository.filterData(partialRequest);
+        List<PetProfileEntity> pets = petProfileRepository.filterData(partialRequest);
         return pets.stream()
                 .map(pet -> new Pet(pet.getName(), pet.getOwner(), pet.getVeterinarian(), pet.getClinic()))
                 .collect(toList());

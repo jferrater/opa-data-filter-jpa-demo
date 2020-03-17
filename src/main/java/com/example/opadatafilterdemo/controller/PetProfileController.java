@@ -1,9 +1,14 @@
 package com.example.opadatafilterdemo.controller;
 
 import com.example.opadatafilterdemo.model.Pet;
-import com.example.opadatafilterdemo.service.PetService;
+import com.example.opadatafilterdemo.service.PetProfileService;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jferrater.opa.ast.to.sql.query.model.request.PartialRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +22,9 @@ import java.util.*;
  * @author joffryferrater
  */
 @RestController
-public class PetController {
+public class PetProfileController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PetProfileController.class);
     /*
      *   The policy query to run during OPA partial evaluation
      */
@@ -28,10 +34,12 @@ public class PetController {
      */
     private static final Set<String> UNKNOWNS = Set.of("data.pets");
 
-    private PetService petService;
+    private PetProfileService petProfileService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    public PetController(PetService petService) {
-        this.petService = petService;
+    public PetProfileController(PetProfileService petProfileService) {
+        this.petProfileService = petProfileService;
     }
 
     @GetMapping("/hello")
@@ -56,7 +64,8 @@ public class PetController {
         CurrentUser currentUser = getCurrentUser(user, null);
         Map<String, Object> input = opaInputDocument("GET", Set.of("pets", name), currentUser);
         partialRequest.setInput(input);
-        Optional<Pet> pet = petService.getPets(partialRequest).stream().filter(p -> p.getName().equals(name)).findFirst();
+        printPartialRequest(partialRequest);
+        Optional<Pet> pet = petProfileService.getPets(partialRequest).stream().filter(p -> p.getName().equals(name)).findFirst();
         if(pet.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -80,8 +89,18 @@ public class PetController {
         CurrentUser currentUser = getCurrentUser(user, clinicLocation);
         Map<String, Object> input = opaInputDocument("GET", Set.of("pets"), currentUser);
         partialRequest.setInput(input);
-        List<Pet> pets = petService.getPets(partialRequest);
+        printPartialRequest(partialRequest);
+        List<Pet> pets = petProfileService.getPets(partialRequest);
         return new ResponseEntity<>(pets, HttpStatus.OK);
+    }
+
+    private void printPartialRequest(PartialRequest partialRequest) {
+        try {
+            String prettyString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(partialRequest);
+            LOGGER.info(prettyString);
+        } catch (JsonProcessingException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
     }
 
     private CurrentUser getCurrentUser(String user, String clinicLocation) {
@@ -100,8 +119,8 @@ public class PetController {
      */
     private Map<String, Object> opaInputDocument(String httpMethod, Set<String> httpRequestPath, CurrentUser currentUser) {
         Map<String, Object> input = new HashMap<>();
-        input.put("method", httpMethod);
         input.put("path", httpRequestPath);
+        input.put("method", httpMethod);
         input.put("subject", currentUser);
         return input;
     }

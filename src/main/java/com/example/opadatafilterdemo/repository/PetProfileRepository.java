@@ -1,6 +1,6 @@
 package com.example.opadatafilterdemo.repository;
 
-import com.example.opadatafilterdemo.entity.PetEntity;
+import com.example.opadatafilterdemo.entity.PetProfileEntity;
 import com.github.jferrater.opa.data.filter.spring.boot.starter.OpaGenericDataFilterDao;
 import org.springframework.stereotype.Repository;
 
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
  * @author joffryferrater
  */
 @Repository
-public class PetRepository extends OpaGenericDataFilterDao<PetEntity> {
+public class PetProfileRepository extends OpaGenericDataFilterDao<PetProfileEntity> {
 
-    public PetRepository() {
-        setClazz(PetEntity.class);
+    public PetProfileRepository() {
+        setClazz(PetProfileEntity.class);
     }
 }

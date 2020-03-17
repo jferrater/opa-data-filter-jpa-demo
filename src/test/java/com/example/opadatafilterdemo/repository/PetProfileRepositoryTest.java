@@ -1,6 +1,6 @@
 package com.example.opadatafilterdemo.repository;
 
-import com.example.opadatafilterdemo.entity.PetEntity;
+import com.example.opadatafilterdemo.entity.PetProfileEntity;
 import com.github.jferrater.opa.ast.to.sql.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.to.sql.query.service.OpaClientService;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class PetRepositoryTest {
+class PetProfileRepositoryTest {
 
     private static final String PET_OWNER_QUERY = "SELECT * FROM pets WHERE (pets.owner = 'bob');";
 
@@ -32,7 +32,7 @@ class PetRepositoryTest {
     OpaClientService mockOpaClientService;
 
     @Autowired
-    private PetRepository target;
+    private PetProfileRepository target;
 
     @DisplayName(
             "Given an H2 database with initial data from src/main/resources/init.sql"
@@ -43,7 +43,7 @@ class PetRepositoryTest {
         PartialRequest partialRequest = mock(PartialRequest.class);
         when(mockOpaClientService.getExecutableSqlStatements(partialRequest)).thenReturn(PET_OWNER_QUERY);
 
-        List<PetEntity> petEntities = target.filterData(partialRequest);
+        List<PetProfileEntity> petEntities = target.filterData(partialRequest);
 
         assertThat(petEntities.size(), is(1));
         assertThat(petEntities.get(0).getOwner(), is("bob"));
