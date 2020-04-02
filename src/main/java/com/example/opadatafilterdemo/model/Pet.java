@@ -2,6 +2,7 @@ package com.example.opadatafilterdemo.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author joffryferrater
@@ -9,12 +10,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Pet {
 
+    @Schema(description = "The name of the pet.", example = "fluffy", required = true)
     @JsonProperty("name")
     private String name;
+
+    @Schema(description = "The owner of the pet.", example = "bob", required = true)
     @JsonProperty("owner")
     private String owner;
+
+    @Schema(description = "The veterinarian of the pet.", example = "alice", required = true)
     @JsonProperty("veterinarian")
     private String veterinarian;
+
+    @Schema(description = "The location of the clinic", example = "SOMA", required = true)
     @JsonProperty("clinic")
     private String clinic;
 
