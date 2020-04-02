@@ -25,3 +25,8 @@ allowed[pet] {
   pet.veterinarian = input.subject.user
   pet.clinic = input.subject.location
 }
+
+allowed[pet] {
+  pet = data.pets[_]
+  pet.veterinarian = input.subject.user
+}

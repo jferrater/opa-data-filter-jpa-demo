@@ -78,10 +78,12 @@ public class PetProfileController {
     ) {
         PartialRequest partialRequest = partialRequest();
         CurrentUser currentUser = getCurrentUser(user, null);
-        Map<String, Object> input = opaInputDocument("GET", Set.of("pets", name), currentUser);
+        Map<String, Object> input = opaInputDocument("GET", List.of("pets", name), currentUser);
         partialRequest.setInput(input);
         printPartialRequest(partialRequest);
-        Optional<Pet> pet = petProfileService.getPets(partialRequest).stream().filter(p -> p.getName().equals(name)).findFirst();
+        List<Pet> pets = petProfileService.getPets(partialRequest);
+        LOGGER.info("Pet list size, {}", pets.size());
+        Optional<Pet> pet = pets.stream().filter(p -> p.getName().equals(name)).findFirst();
         if(pet.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -90,7 +92,7 @@ public class PetProfileController {
 
     @Operation(
             summary = "Get the list of pet profiles",
-            description = "Returns a list of pet profiles. Veterinarians can view the list of pet profiles assign to them from devices at the clinic. " +
+            description = "Returns a list of pet profiles. Veterinarians can view the list of pet profiles assign to them from the devices at the clinic. " +
                     "For simplification, the current user is set from the request parameter, 'user'. Normally, the current user is taken from the authentication object, access tokens or JWTS",
             tags = "petprofile"
     )
@@ -105,7 +107,7 @@ public class PetProfileController {
     ) {
         PartialRequest partialRequest = partialRequest();
         CurrentUser currentUser = getCurrentUser(user, clinicLocation);
-        Map<String, Object> input = opaInputDocument("GET", Set.of("pets"), currentUser);
+        Map<String, Object> input = opaInputDocument("GET", List.of("pets"), currentUser);
         partialRequest.setInput(input);
         printPartialRequest(partialRequest);
         List<Pet> pets = petProfileService.getPets(partialRequest);
@@ -115,7 +117,7 @@ public class PetProfileController {
     private void printPartialRequest(PartialRequest partialRequest) {
         try {
             String prettyString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(partialRequest);
-            LOGGER.info(prettyString);
+            LOGGER.info("Partial Request={}", prettyString);
         } catch (JsonProcessingException e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -135,7 +137,7 @@ public class PetProfileController {
     /*
      * The OPA input document to use.
      */
-    private Map<String, Object> opaInputDocument(String httpMethod, Set<String> httpRequestPath, CurrentUser currentUser) {
+    private Map<String, Object> opaInputDocument(String httpMethod, List<String> httpRequestPath, CurrentUser currentUser) {
         Map<String, Object> input = new HashMap<>();
         input.put("path", httpRequestPath);
         input.put("method", httpMethod);
