@@ -1,5 +1,6 @@
 ## Pet Profile Microservice
-[![Build Status](https://travis-ci.com/jferrater/opa-data-filter-demo.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-demo)
+[![Build Status](https://travis-ci.com/jferrater/opa-data-filter-demo.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-demo)<br>
+==========================================================================================================================<br>
 This is a demo project for [opa-data-filter-spring-boot-starter](https://github.com/jferrater/opa-data-filter-spring-boot-starter)
 
 ### Design
