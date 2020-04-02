@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,7 +63,7 @@ public class PetProfileController {
 
     @Operation(
             summary = "Get pet profile by name",
-            description = "Returns a pet profile. A pet owner and the assign veterinarian can access the pet's profile. " +
+            description = "Returns a pet profile. A pet owner can view their pet's profile regardless of the location. Veterinarians can view a pet profile assigned to them from the devices at the clinic. " +
                     "For simplification, the current user is set from the request parameter, 'user'. Normally, the current user is taken from the authentication object, access tokens or JWTS",
             tags = "petprofile"
     )
@@ -74,10 +75,11 @@ public class PetProfileController {
     @GetMapping("/pets/{name}")
     public ResponseEntity<Pet> getPets(
             @Parameter(description = "The name of the pet to be obtained.", required = true) @PathVariable("name") String name,
-            @Parameter(description = "The current user of the application.") @RequestParam("user") String user
+            @Parameter(description = "The current user of the application.") @RequestParam("user") String user,
+            @Parameter(description = "The clinic location where the veterinarian is using a device to access a pet's profile") @RequestParam("clinic_location") @Nullable String clinicLocation
     ) {
         PartialRequest partialRequest = partialRequest();
-        CurrentUser currentUser = getCurrentUser(user, null);
+        CurrentUser currentUser = getCurrentUser(user, clinicLocation);
         Map<String, Object> input = opaInputDocument("GET", List.of("pets", name), currentUser);
         partialRequest.setInput(input);
         printPartialRequest(partialRequest);
