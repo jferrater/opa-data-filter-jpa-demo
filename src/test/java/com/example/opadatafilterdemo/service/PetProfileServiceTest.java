@@ -3,7 +3,7 @@ package com.example.opadatafilterdemo.service;
 import com.example.opadatafilterdemo.entity.PetProfileEntity;
 import com.example.opadatafilterdemo.model.Pet;
 import com.example.opadatafilterdemo.repository.PetProfileRepository;
-import com.github.jferrater.opa.ast.to.sql.query.model.request.PartialRequest;
+import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
