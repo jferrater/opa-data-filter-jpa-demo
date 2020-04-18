@@ -34,6 +34,7 @@ jobs:
         - docker ps -a
       script:
         - ./gradlew clean build
+        - ./gradlew integrationTest
       after_script:
         - docker ps -a
 

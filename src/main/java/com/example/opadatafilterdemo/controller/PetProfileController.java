@@ -5,7 +5,7 @@ import com.example.opadatafilterdemo.service.PetProfileService;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.jferrater.opa.ast.to.sql.query.model.request.PartialRequest;
+import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -92,6 +92,11 @@ public class PetProfileController {
         return new ResponseEntity<>(pet.get(), HttpStatus.OK);
     }
 
+    @GetMapping("/loves")
+    public ResponseEntity<List<Pet>> getTestPets() {
+        List<Pet> pets = petProfileService.getPets();
+        return new ResponseEntity<>(pets, HttpStatus.OK);
+    }
     @Operation(
             summary = "Get the list of pet profiles",
             description = "Returns a list of pet profiles. Veterinarians can view the list of pet profiles assign to them from the devices at the clinic. " +

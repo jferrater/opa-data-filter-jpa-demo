@@ -4,6 +4,7 @@ plugins {
 	id 'java'
 	id 'maven'
 	id 'maven-publish'
+	id 'org.unbroken-dome.test-sets' version '2.2.1'
 }
 
 group = 'com.example'
@@ -17,14 +18,13 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.2.1'
+	implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.3.1'
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.3.0'
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.1.49'
 	implementation 'com.google.code.findbugs:jsr305:3.0.2'
 	annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 	runtimeOnly 'com.h2database:h2'
-	runtimeOnly group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -35,6 +35,21 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+testSets {
+	integrationTest
+}
+
+integrationTest {
+	useJUnitPlatform()
+	integrationTest.outputs.upToDateWhen { false }
+	failFast = true
+	dependsOn 'cleanIntegrationTest'
+
+	testLogging {
+		events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+	}
 }
 
 bootRun {

@@ -51,8 +51,7 @@ allowed[pet] {
 1. ``git clone https://github.com/jferrater/opa-data-filter-demo.git``
 2. ``cd opa-data-filter-demo``
 3. ``docker-compose up`` <br>
-   The docker-compose will spin up an Open Policy Agent server with a policy, `petclinic_policy.rego`` and
-   a MariaDB with initial data from ``classpath:sql/init.sql``
+   The docker-compose will spin up an Open Policy Agent server with a policy, `petclinic_policy.rego`` and a MariaDB with initial data from ``classpath:sql/init.sql``
 4. Start the application <br>
   ``./gradlew -Dspring.profiles.active=mariadb bootRun``
 5. Open http://localhost:8081/swagger-ui.html for API documentation.
