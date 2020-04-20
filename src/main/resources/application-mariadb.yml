@@ -8,6 +8,3 @@ spring:
     url: jdbc:mariadb://localhost:3306/integrationTest
     username: admin
     password: MangaonTaNiny0!
-  jpa:
-    database-platform: org.hibernate.dialect.MariaDBDialect
-    open-in-view: false

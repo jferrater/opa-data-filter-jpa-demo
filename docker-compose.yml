@@ -1,5 +1,23 @@
 version: '3.7'
 services:
+  petprofiles-service:
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - maria-database
+      - opa-server
+    environment:
+      OPA_AUTHORIZATION_URL: http://opa-server:8181/v1/compile
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.mariadb.jdbc.Driver
+      SPRING_DATASOURCE_URL: jdbc:mariadb://maria-database:3306/integrationTest
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: MangaonTaNiny0!
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MariaDBDialect
+    ports:
+      - "8081:8081"
+
   maria-database:
     image: mariadb:10-bionic
     restart: always

@@ -17,8 +17,6 @@ public class OpaDataFilterDemoApplication {
 
 		SpringApplication.run(OpaDataFilterDemoApplication.class, args);
 
-
-
 	}
 
 }

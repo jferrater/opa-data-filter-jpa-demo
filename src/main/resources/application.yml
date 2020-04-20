@@ -6,13 +6,14 @@ opa:
     url: "http://localhost:8181/v1/compile"
   datasource:
     entities-package-name: "com.example.opadatafilterdemo.repository"
+
   partial-request:
     query: "data.petclinic.authz.allow = true"
     unknowns:
       - "data.pets"
     log-partial-request: true
     user-attribute-to-http-header-map:
-      clinic_location: X-ORG-HEADER
+      organization: X-ORG-HEADER
 
 spring:
   datasource:
@@ -20,3 +21,6 @@ spring:
     url: "jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:sql/init.sql'"
     username: "sa"
     password: ""
+
+  autoconfigure:
+    exclude: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration, org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration"

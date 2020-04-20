@@ -20,7 +20,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'mysql:mysql-connector-java'
-	implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.3.2'
+	implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.4.1'
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.3.0'
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.1.49'
@@ -58,3 +58,4 @@ integrationTest {
 bootRun {
 	systemProperties = System.properties
 }
+
