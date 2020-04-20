@@ -65,6 +65,7 @@ class PetProfileControllerTestIT {
     void petOwnerCanViewThePetProfileHeOwn() throws Exception {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Authorization", "Basic Ym9iOnBhc3N3b3Jk"); //The user is bob, the pet owner of the pet with name browny
+        httpHeaders.set("X-ORG-HEADER", "SOMA"); //The name of the clinic is in the X-ORG-HEADER
         Pet[] result = get(httpHeaders);
         assertThat(result.length, is(1));
         Pet pet = result[0];
