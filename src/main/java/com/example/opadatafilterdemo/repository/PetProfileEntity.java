@@ -1,4 +1,4 @@
-package com.example.opadatafilterdemo.entity;
+package com.example.opadatafilterdemo.repository;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

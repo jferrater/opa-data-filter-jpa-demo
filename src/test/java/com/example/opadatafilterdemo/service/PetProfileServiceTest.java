@@ -1,8 +1,8 @@
 package com.example.opadatafilterdemo.service;
 
-import com.example.opadatafilterdemo.entity.PetProfileEntity;
 import com.example.opadatafilterdemo.model.Pet;
-import com.example.opadatafilterdemo.repository.PetProfileRepository;
+import com.example.opadatafilterdemo.repository.PetProfileEntity;
+import com.example.opadatafilterdemo.repository.PetRepositoryHibernate;
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 class PetProfileServiceTest {
 
     @MockBean
-    PetProfileRepository petProfileRepository;
+    PetRepositoryHibernate petProfileRepository;
 
     @Autowired
     private PetProfileService target;
@@ -34,7 +34,7 @@ class PetProfileServiceTest {
         PetProfileEntity petProfileEntity = petEntity();
         when(petProfileRepository.filterData(partialRequest)).thenReturn(List.of(petProfileEntity));
 
-        List<Pet> results = target.getPets(partialRequest);
+        List<Pet> results = target.getPetsHibernate();
 
         assertThat(results.size(), is(1));
     }

@@ -14,7 +14,11 @@ public class OpaDataFilterDemoApplication {
 	private static final Logger LOGGER = LoggerFactory.getLogger(OpaDataFilterDemoApplication.class);
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(OpaDataFilterDemoApplication.class, args);
+
+
+
 	}
 
 }

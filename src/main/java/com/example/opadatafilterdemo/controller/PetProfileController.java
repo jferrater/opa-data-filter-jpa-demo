@@ -72,7 +72,7 @@ public class PetProfileController {
             @ApiResponse(responseCode = "404", description = "Pet Profile not found"),
             @ApiResponse(responseCode = "500", description = "An internal server error has occurred. Might be Open Policy Agent server is not reachable")
     })
-    @GetMapping("/pets/{name}")
+    @GetMapping("/lovely/{name}")
     public ResponseEntity<Pet> getPets(
             @Parameter(description = "The name of the pet to be obtained.", required = true) @PathVariable("name") String name,
             @Parameter(description = "The current user of the application.") @RequestParam("user") String user,
@@ -83,7 +83,7 @@ public class PetProfileController {
         Map<String, Object> input = opaInputDocument("GET", List.of("pets", name), currentUser);
         partialRequest.setInput(input);
         printPartialRequest(partialRequest);
-        List<Pet> pets = petProfileService.getPets(partialRequest);
+        List<Pet> pets = petProfileService.getLovelyPets();
         LOGGER.info("Pet list size, {}", pets.size());
         Optional<Pet> pet = pets.stream().filter(p -> p.getName().equals(name)).findFirst();
         if(pet.isEmpty()) {
@@ -94,9 +94,16 @@ public class PetProfileController {
 
     @GetMapping("/loves")
     public ResponseEntity<List<Pet>> getTestPets() {
-        List<Pet> pets = petProfileService.getPets();
+        List<Pet> pets = petProfileService.getLovelyPets();
         return new ResponseEntity<>(pets, HttpStatus.OK);
     }
+
+    @GetMapping("/pets")
+    public ResponseEntity<List<Pet>> getLovelyPets() {
+        List<Pet> pets = petProfileService.getLovelyPets();
+        return new ResponseEntity<>(pets, HttpStatus.OK);
+    }
+
     @Operation(
             summary = "Get the list of pet profiles",
             description = "Returns a list of pet profiles. Veterinarians can view the list of pet profiles assign to them from the devices at the clinic. " +
@@ -107,7 +114,7 @@ public class PetProfileController {
             @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
             @ApiResponse(responseCode = "500", description = "An internal server error has occurred. Might be Open Policy Agent server is not reachable")
     })
-    @GetMapping("/pets")
+    @GetMapping("/lovely")
     public ResponseEntity<List<Pet>> getPetsByCurrentUser(
             @Parameter(description = "The current user of the application. This can be a pet's owner or the assign veterinarian.") @RequestParam("user") String user,
             @Parameter(description = "The clinic location where the veterinarian is using a device to access a pet's profile") @RequestParam("clinic_location") String clinicLocation
@@ -117,7 +124,7 @@ public class PetProfileController {
         Map<String, Object> input = opaInputDocument("GET", List.of("pets"), currentUser);
         partialRequest.setInput(input);
         printPartialRequest(partialRequest);
-        List<Pet> pets = petProfileService.getPets(partialRequest);
+        List<Pet> pets = petProfileService.getLovelyPets();
         return new ResponseEntity<>(pets, HttpStatus.OK);
     }
 
