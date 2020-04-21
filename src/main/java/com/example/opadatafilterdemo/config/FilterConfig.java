@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FilterConfig {
 
-    private static final String URL_PATTERN = "/*";
+    private static final String URL_PATTERN = "/pets";
 
     @Bean
     public FilterRegistrationBean<XorgHeaderFilter> loggingFilter() {
