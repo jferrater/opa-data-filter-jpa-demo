@@ -1,9 +1,8 @@
 package com.example.opadatafilterdemo.service;
 
-import com.example.opadatafilterdemo.entity.PetProfileEntity;
 import com.example.opadatafilterdemo.model.Pet;
-import com.example.opadatafilterdemo.repository.PetProfileRepository;
-import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
+import com.example.opadatafilterdemo.repository.PetProfileEntity;
+import com.example.opadatafilterdemo.repository.PetRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -23,18 +21,17 @@ import static org.mockito.Mockito.when;
 class PetProfileServiceTest {
 
     @MockBean
-    PetProfileRepository petProfileRepository;
+    PetRepository petRepository;
 
     @Autowired
     private PetProfileService target;
 
     @Test
     void shouldFilterData() {
-        PartialRequest partialRequest = mock(PartialRequest.class);
         PetProfileEntity petProfileEntity = petEntity();
-        when(petProfileRepository.filterData(partialRequest)).thenReturn(List.of(petProfileEntity));
+        when(petRepository.findAll()).thenReturn(List.of(petProfileEntity));
 
-        List<Pet> results = target.getPets(partialRequest);
+        List<Pet> results = target.getPetProfiles();
 
         assertThat(results.size(), is(1));
     }

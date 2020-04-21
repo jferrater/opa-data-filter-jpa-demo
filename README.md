@@ -49,19 +49,26 @@ allowed[pet] {
 
 #### Quick Start
 1. ``git clone https://github.com/jferrater/opa-data-filter-demo.git``
-2. ``cd opa-data-filter-demo``
-3. ``docker-compose up`` <br>
-   The docker-compose will spin up an Open Policy Agent server with a policy, `petclinic_policy.rego`` and a MariaDB with initial data from ``classpath:sql/init.sql``
-4. Start the application <br>
-  ``./gradlew -Dspring.profiles.active=mariadb bootRun``
+2. ``cd opa-data-filter-demo && ./gradlew bootJar``
+3. ``docker-compose up --build`` <br>
+   The docker-compose will run the PetProfile service, Open Policy Agent server with a policy, `petclinic_policy.rego` and a MariaDB with initial data from `classpath:sql/init.sql`
 5. Open http://localhost:8081/swagger-ui.html for API documentation.
+#### Testing
+Configured users are `alice` and `bob`. `alice` is a veterinarian of the pet with name `browny`
+and `bob` is the pet owner.
+```shell script
+curl -i --user alice:password -H "X-ORG-HEADER: SOMA" http://localhost:8081/pets
 
+curl -i --user bob:password -H "X-ORG-HEADER: SOMA" http://localhost:8081/pets
+```
+- alice should be able to see all the pets assigned to her.
+- bob should only see his pet with name browny
 ### Project Implementation
 #### Dependencies
-The following dependencies were added in the project to enable data filtering.
+The following dependencies were added in the project to enforce authorization at the Spring Data repository.
 ```groovy
 implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.2.1'
+implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.4.1'
 ```
 #### Configuration
 The configuration is defined in the ``classpath:application-mariadb.yml``. This is the configuration used when running command ``./gradlew -Dspring.profiles.active=mariadb bootRun``
@@ -69,17 +76,15 @@ The configuration is defined in the ``classpath:application-mariadb.yml``. This 
 opa:
   authorization:
     url: "http://localhost:8181/v1/compile"
-    datasource:
-      jdbc:
-        driverClassName: "org.mariadb.jdbc.Driver"
-        username: "admin"
-        password: "MangaonTaNiny0!"
-        url: "jdbc:mariadb://localhost:3306/integrationTest"
-      hibernate:
-        dialect: "org.hibernate.dialect.MariaDBDialect"
-        entities:
-          package-name: "com.example.opadatafilterdemo.entity"
+
+#Spring Data JPA specific configurations
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/integrationTest
+    username: admin
+    password: MangaonTaNiny0!
 ```
 
 ### Contact
-Contact me at ``joffry.ferrater@gmail.com` for feedback and suggestions.
+Contact me at `joffry.ferrater@gmail.com` for feedback and suggestions.

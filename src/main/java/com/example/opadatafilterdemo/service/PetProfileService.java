@@ -1,12 +1,12 @@
 package com.example.opadatafilterdemo.service;
 
-import com.example.opadatafilterdemo.entity.PetProfileEntity;
 import com.example.opadatafilterdemo.model.Pet;
-import com.example.opadatafilterdemo.repository.PetProfileRepository;
-import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
+import com.example.opadatafilterdemo.repository.PetProfileEntity;
+import com.example.opadatafilterdemo.repository.PetRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -17,25 +17,18 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class PetProfileService {
 
-    private PetProfileRepository petProfileRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(PetProfileService.class);
 
-    @Resource(name = "partialRequestGenerator")
-    private PartialRequestGenerator partialRequestGenerator;
+    private PetRepository petRepository;
 
-    public PetProfileService(PetProfileRepository petProfileRepository) {
-        this.petProfileRepository = petProfileRepository;
+    public PetProfileService(PetRepository petRepository) {
+        this.petRepository = petRepository;
     }
 
-    public List<Pet> getPets(PartialRequest partialRequest) {
-        return filterGetPets(partialRequest);
-    }
-    public List<Pet> getPets() {
-        return filterGetPets(partialRequestGenerator.getPartialRequest());
-    }
-
-    private List<Pet> filterGetPets(PartialRequest partialRequest) {
-        List<PetProfileEntity> pets = petProfileRepository.filterData(partialRequest);
-        return pets.stream()
+    public List<Pet> getPetProfiles() {
+        List<PetProfileEntity> all = petRepository.findAll();
+        LOGGER.info("size of pets lists: {}", all.size());
+        return all.stream()
                 .map(pet -> new Pet(pet.getName(), pet.getOwner(), pet.getVeterinarian(), pet.getClinic()))
                 .collect(toList());
     }

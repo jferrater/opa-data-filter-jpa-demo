@@ -33,7 +33,7 @@ jobs:
         - docker --version
         - docker ps -a
       script:
-        - ./gradlew clean build
+        - ./gradlew clean build bootJar
         - ./gradlew integrationTest
       after_script:
         - docker ps -a

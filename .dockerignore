@@ -1,4 +1,10 @@
-build
 .gradle
-gradle
+.git
 .idea
+!build/libs/*.jar
+build/classes
+build/generated
+build/resources
+build/tmp
+gradle/wrapper
+logs

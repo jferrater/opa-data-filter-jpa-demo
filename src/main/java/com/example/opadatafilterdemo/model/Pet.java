@@ -26,6 +26,9 @@ public class Pet {
     @JsonProperty("clinic")
     private String clinic;
 
+    public Pet() {
+    }
+
     public Pet(String name, String owner, String veterinarian, String clinic) {
         this.name = name;
         this.owner = owner;
