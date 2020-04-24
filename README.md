@@ -68,7 +68,7 @@ curl -i --user bob:password -H "X-ORG-HEADER: SOMA" http://localhost:8081/pets
 The following dependencies were added in the project to enforce authorization at the Spring Data repository.
 ```groovy
 implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.4.2'
+implementation group:'com.github.jferrater', name: 'opa-datafilter-jpa-spring-boot-starter', version: '0.4.3'
 ```
 #### Configuration
 The configuration is defined in the ``classpath:application-mariadb.yml``. This is the configuration used when running command ``./gradlew -Dspring.profiles.active=mariadb bootRun``
