@@ -3,7 +3,7 @@ package com.example.opadatafilterdemo.service;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
+import opa.datafilter.core.ast.db.query.model.request.PartialRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
