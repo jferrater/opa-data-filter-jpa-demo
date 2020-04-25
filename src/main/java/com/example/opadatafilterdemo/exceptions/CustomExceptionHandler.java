@@ -1,6 +1,6 @@
 package com.example.opadatafilterdemo.exceptions;
 
-import com.github.jferrater.opa.ast.db.query.exception.PartialEvauationException;
+import opa.datafilter.core.ast.db.query.exception.PartialEvauationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

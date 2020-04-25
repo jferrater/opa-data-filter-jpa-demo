@@ -1,6 +1,6 @@
 package com.example.opadatafilterdemo.repository;
 
-import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.OpaDataFilterRepository;
+import com.github.jferrater.opadatafilterjpaspringbootstarter.repository.OpaDataFilterRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
