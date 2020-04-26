@@ -76,6 +76,13 @@ The configuration is defined in the ``classpath:application-mariadb.yml``. This 
 opa:
   authorization:
     url: "http://localhost:8181/v1/compile"
+  partial-request:
+    query: "data.petclinic.authz.allow = true"
+    unknowns:
+      - "data.pets"
+    user-attribute-to-http-header-map:
+      organization: X-ORG-HEADER
+    log-partial-request: true
 
 #Spring Data JPA specific configurations
 spring:
