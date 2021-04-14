@@ -1,8 +1,8 @@
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y curl
-COPY opa_linux_amd64_v0.22.0 opa
-RUN chmod 755 ./opa
+RUN apt-get update && apt-get install -y curl && \
+    curl -L -o opa https://github.com/open-policy-agent/opa/releases/download/v0.25.0/opa_linux_amd64 && \
+    chmod 755 ./opa
 
 COPY petclinic_policy.rego .
 COPY run_opa.sh .
